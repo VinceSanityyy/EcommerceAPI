@@ -28,4 +28,9 @@ class LoginController extends BaseController
         } 
 
     }
+
+    public function getUserInfo(Request $request){
+        $user = Auth::user();
+        return $user;
+    }
 }
