@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\LoginController;
+use App\Http\Controllers\API\CategoriesController;
+use App\Http\Controllers\API\ProductsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,4 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [LoginController::class, 'login']);
+
 Route::middleware('auth:api')->get('me', [LoginController::class, 'getUserInfo']);
+Route::middleware('auth:api')->post('addCategory', [CategoriesController::class, 'addCategory']);
+Route::middleware('auth:api')->post('addProduct', [ProductsController::class, 'addProduct']);

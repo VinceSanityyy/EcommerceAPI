@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('product_status');
             $table->string('price');
             $table->string('unit');
+            $table->string('image');
             $table->bigInteger('category_id')->unsigned();
             $table->timestamps();
         });
