@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\Models\Categories;
 class ProductsController extends Controller
 {
     public function addProduct(Request $request){
@@ -19,13 +20,30 @@ class ProductsController extends Controller
             $path = $request->file('image')->store('public/images');
 
             $product->image = $path;
-            $product->category_id = $request->cat_id;
+            $product->category_id = $request->category_id;
             $product->save();
               
             return response()->json([
                 "success" => true,
             ]);
+    }
 
-        
+    public function getProducts(){
+        $products = Products::with('category:category_name,id')->get();
+        // dd($products);
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ]);
+    }
+
+    public function getProdutcsByCat(Request $request){
+   
+        $products = Categories::where('id',$request->category_id)->with('products')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $products
+        ]);
     }
 }

@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('address');
             $table->string('contact')->unique();
+            $table->string('image')->nullable();
             $table->string('isVerified');
             $table->bigInteger('role_id')->unsigned();
             $table->timestamp('email_verified_at')->nullable();

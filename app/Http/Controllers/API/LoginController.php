@@ -13,14 +13,13 @@ class LoginController extends BaseController
 {
     public function Login(Request $request){
 
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+        if(Auth::attempt(['email' => $request->email, 'isVerified' => 1, 'password' => $request->password])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')-> accessToken; 
             // $success['name'] =  $user->name;
             // $success['email'] = $user->email;
             // $success['address'] = $user->address;
             // $success['contact'] = $user->contact;
-   
             return $this->sendResponse($success, 'User login successfully.');
         } 
         else{ 
@@ -32,5 +31,13 @@ class LoginController extends BaseController
     public function getUserInfo(Request $request){
         $user = Auth::user();
         return $user;
+    }
+
+    public function logout (Request $request) {
+        $user = Auth::user();
+        $token = $request->user()->token();
+        // dd($user);
+        $token->revoke();
+        return $this->sendResponse('You have been successfully logged out!',200);
     }
 }

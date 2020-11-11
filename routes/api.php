@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\CategoriesController;
 use App\Http\Controllers\API\ProductsController;
+use App\Http\Controllers\API\UsersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,7 +22,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [LoginController::class, 'login']);
+Route::middleware('auth:api')->post('logout', [LoginController::class, 'logout']);
+Route::post('register', [UsersController::class, 'register']);
 
 Route::middleware('auth:api')->get('me', [LoginController::class, 'getUserInfo']);
 Route::middleware('auth:api')->post('addCategory', [CategoriesController::class, 'addCategory']);
 Route::middleware('auth:api')->post('addProduct', [ProductsController::class, 'addProduct']);
+Route::middleware('auth:api')->get('users', [UsersController::class, 'getUsers']);
+Route::middleware('auth:api')->get('products', [ProductsController::class, 'getProducts']);
+Route::middleware('auth:api')->get('productsCat', [ProductsController::class, 'getProdutcsByCat']);
