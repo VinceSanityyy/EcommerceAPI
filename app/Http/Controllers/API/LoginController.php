@@ -15,11 +15,12 @@ class LoginController extends BaseController
 
         if(Auth::attempt(['email' => $request->email, 'isVerified' => 1, 'password' => $request->password])){ 
             $user = Auth::user(); 
-            $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-            // $success['name'] =  $user->name;
-            // $success['email'] = $user->email;
-            // $success['address'] = $user->address;
-            // $success['contact'] = $user->contact;
+            $success['token'] =  $user->createToken('MyApp')->accessToken; 
+            $success['name'] =  $user->name;
+            $success['user_id'] = $user->id;
+            $success['role_id'] = $user->role_id;
+            $success['email'] = $user->email;
+            $success['image_link'] = $user->image_link;
             return $this->sendResponse($success, 'User login successfully.');
         } 
         else{ 

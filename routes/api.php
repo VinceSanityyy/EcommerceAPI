@@ -22,12 +22,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [LoginController::class, 'login']);
-Route::middleware('auth:api')->post('logout', [LoginController::class, 'logout']);
 Route::post('register', [UsersController::class, 'register']);
-
+Route::middleware('auth:api')->post('logout', [LoginController::class, 'logout']);
 Route::middleware('auth:api')->get('me', [LoginController::class, 'getUserInfo']);
-Route::middleware('auth:api')->post('addCategory', [CategoriesController::class, 'addCategory']);
-Route::middleware('auth:api')->post('addProduct', [ProductsController::class, 'addProduct']);
-Route::middleware('auth:api')->get('users', [UsersController::class, 'getUsers']);
-Route::middleware('auth:api')->get('products', [ProductsController::class, 'getProducts']);
-Route::middleware('auth:api')->get('productsCat', [ProductsController::class, 'getProdutcsByCat']);
+
+Route::prefix('store')->group(function () {
+    Route::middleware('auth:api')->post('addCategory', [CategoriesController::class, 'addCategory']);
+    Route::middleware('auth:api')->post('addProduct', [ProductsController::class, 'addProduct']);
+    Route::middleware('auth:api')->get('users', [UsersController::class, 'getUsers']);
+    Route::middleware('auth:api')->get('products', [ProductsController::class, 'getProducts']);
+    Route::middleware('auth:api')->get('productsCat', [ProductsController::class, 'getProdutcsByCat']);
+});
