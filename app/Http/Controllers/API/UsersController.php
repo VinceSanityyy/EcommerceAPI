@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use DB;
 class UsersController extends Controller
 {
     public function register(Request $request){
@@ -37,5 +37,9 @@ class UsersController extends Controller
             'success' => true,
             'data' => $users
         ]);
+    }
+
+    public function updateUser(Request $request){
+        
     }
 }
