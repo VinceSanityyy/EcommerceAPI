@@ -22,7 +22,7 @@ class UsersController extends Controller
         $user->image = $path;
 
         $user->isVerified = 0;
-        $user->role_id = 2;
+        $user->role_id = 3;
 
         $user->save();
 

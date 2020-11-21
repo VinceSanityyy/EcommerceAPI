@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Categories;
 use DB;
+
 class ProductsController extends Controller
 {
     public function addProduct(Request $request){
@@ -43,19 +44,21 @@ class ProductsController extends Controller
 
     public function getProducts(){
         $products = Products::with('category:category_name,id')->get();
-        return response()->json([
-            'success' => true,
-            'data' => $products
-        ]);
+        // return response()->json([
+        //     'success' => true,
+        //     'data' => $products
+        // ]);
+        return response()->json($products);
     }
 
     public function getProdutcsByCat(Request $request){
    
         $products = Categories::where('id',$request->category_id)->with('products')->get();
-        return response()->json([
-            'success' => true,
-            'data' => $products
-        ]);
+        // return response()->json([
+        //     'success' => true,
+        //     'data' => $products
+        // ]);
+        return response()->json($products);
     }
 
     public function updateProduct(Request $request){
@@ -89,5 +92,16 @@ class ProductsController extends Controller
                 "message" => $th->getMessage()
             ], 400);
         }
+    }
+
+    public function getProductDetails(Request $request){
+
+        // dd(\Auth::user());
+        
+        $id = $request->product_id;
+
+        $product = Products::findOrFail($id)->with('category:category_name,id')->get();
+
+        return response()->json($product);
     }
 }

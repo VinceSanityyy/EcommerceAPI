@@ -56,9 +56,19 @@ class CategoriesController extends Controller
     public function getCategories(){
         $categories = Categories::all();
 
-        return response()->json([
-            "status" => "success",
-            "data" => $categories
-        ]);
+        // return response()->json([
+        //     "success" => true,
+        //     "data" => $categories
+        // ]);
+
+        return response()->json($categories);
+    }
+
+    public function getCategoryDetails(Request $request){
+        $id = $request->category_id;
+
+        $category = Categories::findOrFail($id);
+
+        return response()->json($category);
     }
 }
