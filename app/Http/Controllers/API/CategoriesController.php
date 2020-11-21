@@ -52,4 +52,13 @@ class CategoriesController extends Controller
             ], 400);
         }
     }
+
+    public function getCategories(){
+        $categories = Categories::all();
+
+        return response()->json([
+            "status" => "success",
+            "data" => $categories
+        ]);
+    }
 }

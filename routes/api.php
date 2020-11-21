@@ -28,10 +28,12 @@ Route::middleware('auth:api')->get('me', [LoginController::class, 'getUserInfo']
 
 Route::prefix('store')->group(function () {
     Route::middleware('auth:api')->post('addCategory', [CategoriesController::class, 'addCategory']);
+    Route::middleware('auth:api')->get('getCategories', [CategoriesController::class, 'getCategories']);
     Route::middleware('auth:api')->post('addProduct', [ProductsController::class, 'addProduct']);
     Route::middleware('auth:api')->get('users', [UsersController::class, 'getUsers']);
     Route::middleware('auth:api')->get('products', [ProductsController::class, 'getProducts']);
     Route::middleware('auth:api')->post('updateProduct{product_id?}', [ProductsController::class, 'updateProduct']);
     Route::middleware('auth:api')->post('updateCategory{category_id?}', [CategoriesController::class, 'updateCategory']);
     Route::middleware('auth:api')->get('getProductsByCategory{category_id?}', [ProductsController::class, 'getProdutcsByCat']);
+    Route::middleware('auth:api')->post('updateUser{user_id?}', [UsersController::class, 'updateUser']);
 });

@@ -40,6 +40,22 @@ class UsersController extends Controller
     }
 
     public function updateUser(Request $request){
-        
+        DB::beginTransaction();
+        try{
+            $id = $request->user_id;
+            $user = User::findOrFail($id);
+            $user->isVerified = $request->isVerified;
+            $user->save();
+            DB::commit();
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } catch (\Throwable $th){
+            DB::rollBack();
+            return response()->json([
+                "status" => "fail",
+                "message" => $th->getMessage()
+            ], 400);
+        }
     }
 }
