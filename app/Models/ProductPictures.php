@@ -5,23 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class ProductPictures extends Model
 {
     use HasFactory;
-
+    
+    protected $table = 'product_pictures';
     protected $guarded = [];
-    protected $table = 'products';
     protected $appends = [
         'image_link'
     ];
 
+    public function pictures()
+    {
+        return $this->belongsTo('App\Models\Products', 'product_id');
+    }
+
     public function getImageLinkAttribute()
     {
 
-        if (!empty($this->image)) {
+        if (!empty($this->picture)) {
 
             // explode by /
-            $explode_path = explode('/', $this->image);
+            $explode_path = explode('/', $this->picture);
             // removed first value in array wich is the public of the path
             unset($explode_path[0]);
             // return back to his format
@@ -33,16 +38,5 @@ class Products extends Model
         }
 
         return $photo;
-    }
-    
-
-    public function category()
-    {
-        return $this->belongsTo('App\Models\Categories');
-    }
-
-    public function product_pictures()
-    {
-        return $this->hasMany('App\Models\ProductPictures','product_id');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Categories;
+use App\Models\ProductPictures;
 use DB;
 
 class ProductsController extends Controller
@@ -44,7 +45,7 @@ class ProductsController extends Controller
     }
 
     public function getProducts(){
-        $products = Products::with('category:category_name,id')->get();
+        $products = Products::with('category:category_name,id')->with('product_pictures')->get();
         // return response()->json([
         //     'success' => true,
         //     'data' => $products
@@ -104,5 +105,46 @@ class ProductsController extends Controller
         $product = Products::findOrFail($id)->with('category:category_name,id')->get();
 
         return response()->json($product);
+    }
+
+    public function addPicturesToProducts(Request $request){
+        DB::beginTransaction();
+
+        try {
+  
+            $files = $request->file('image');
+            $allowedfileExtension=['pdf','jpg','png'];
+
+            foreach($files as $file){
+                $extension = $file->getClientOriginalExtension();
+                $check = in_array($extension,$allowedfileExtension);
+
+                if($check){
+                    foreach($request->image as $mediaFiles){
+                        $path = $mediaFiles->store('public/images');
+                        $name = $mediaFiles->getClientOriginalName();
+              
+                      
+                        $pictures = new ProductPictures();
+                        $pictures->product_id = $request->product_id;
+                        $pictures->picture = $path;
+                        $pictures->save();
+                    }
+                }else{
+                    return response()->json('Failes');
+                }
+                DB::commit();
+                return response()->json([
+                    'status' => 'success'
+                ]);
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                "status" => "fail",
+                "message" => $th->getMessage()
+            ], 400);
+        }
     }
 }

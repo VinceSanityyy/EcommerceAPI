@@ -51,6 +51,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('updateUser{user_id?}', [UsersController::class, 'updateUser']);
             Route::get('getProductDetails{product_id?}', [ProductsController::class, 'getProductDetails']);
             Route::get('getCategoryDetails{category_id?}', [CategoriesController::class, 'getCategoryDetails']);
+            Route::post('addPicturesToProducts{product_id?}', [ProductsController::class, 'addPicturesToProducts']);
         });
 
         Route::middleware(['customer'])->prefix('customer')->group(function(){
