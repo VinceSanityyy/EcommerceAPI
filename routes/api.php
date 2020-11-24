@@ -62,3 +62,6 @@ Route::middleware(['auth:api'])->group(function () {
         });
 });
 
+Route::get('getProductDetailsCustomer{product_id?}', [ProductsController::class, 'getProductDetails']);
+Route::get('products', [ProductsController::class, 'getProducts']);
+
