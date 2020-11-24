@@ -20,6 +20,7 @@ class ProductsController extends Controller
                 $product->product_status = 'available';
                 $product->price = $request->price;
                 $product->unit = $request->unit;
+                $product->description = $request->description;
                 $name = $request->file('image')->getClientOriginalName();
                 $path = $request->file('image')->store('public/images');
 
@@ -73,7 +74,7 @@ class ProductsController extends Controller
             $product->price = $request->price;
             $product->unit = $request->unit;
             $product->category_id = $request->category_id;
-
+            $product->description = $request->description;
             $name = $request->file('image')->getClientOriginalName();
             $path = $request->file('image')->store('public/images');
 
