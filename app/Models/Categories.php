@@ -10,6 +10,13 @@ class Categories extends Model
     use HasFactory;
     protected $table = 'categories';
     protected $guarded=[];
+    protected $appends = [
+        'selected',
+    ];
+
+    public function getSelectedAttribute(){
+        return false;
+    }
 
     public function products()
     {

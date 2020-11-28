@@ -13,8 +13,12 @@ class Products extends Model
     protected $table = 'products';
     protected $appends = [
         'image_link',
+        'selected'
     ];
     
+    public function getSelectedAttribute(){
+        return false;
+    }
 
     public function getImageLinkAttribute()
     {
