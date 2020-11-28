@@ -6,6 +6,7 @@ use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\CategoriesController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Controllers\API\UsersController;
+use App\Http\Controllers\API\CartController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -59,9 +60,13 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('getProductDetailsCustomer{product_id?}', [ProductsController::class, 'getProductDetails']);
             Route::get('getCategories', [CategoriesController::class, 'getCategories']);
             Route::get('getProductsByCategory{category_id?}', [ProductsController::class, 'getProdutcsByCat']);
+            Route::post('addProductComment{product_id?}', [ProductsController::class, 'addProductComment']);
+            Route::post('addToCart', [CartController::class, 'addToCart']);
+            Route::post('updateCart', [CartController::class, 'updateCart']);
+            Route::delete('clearCart', [CartController::class, 'clearCart']);
         });
 });
-
+Route::get('getCategories', [CategoriesController::class, 'getCategories']);
 Route::get('getProductDetailsCustomer{product_id?}', [ProductsController::class, 'getProductDetails']);
 Route::get('products', [ProductsController::class, 'getProducts']);
 

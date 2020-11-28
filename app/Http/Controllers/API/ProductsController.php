@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Categories;
 use App\Models\ProductPictures;
+use App\Models\ProductComment;
 use DB;
 
 class ProductsController extends Controller
@@ -138,6 +139,32 @@ class ProductsController extends Controller
                     'status' => 'success'
                 ]);
             }
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                "status" => "fail",
+                "message" => $th->getMessage()
+            ], 400);
+        }
+    }
+
+    public function addProductComment(Request $request){
+        DB::beginTransaction();
+
+        try {
+            $user_id = \Auth::user()->id;
+            $comment = new ProductComment;
+            $comment->product_id = $request->product_id;
+            $comment->user_id = $user_id;
+            $comment->rating = $request->rating;
+            $comment->comment = $request->comment;
+            $comment->save();
+
+            DB::commit();
+            return response()->json([
+                'status' => 'success'
+            ]);
 
         } catch (\Throwable $th) {
             DB::rollBack();
