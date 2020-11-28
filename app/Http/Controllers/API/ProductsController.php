@@ -103,7 +103,7 @@ class ProductsController extends Controller
         
         $id = $request->product_id;
 
-        $product = Products::findOrFail($id)->with('category:category_name,id')->get();
+        $product = Products::findOrFail($id)->with('category:category_name,id')->with('product_pictures')->get();
 
         return response()->json($product);
     }
