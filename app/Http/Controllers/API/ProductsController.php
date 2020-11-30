@@ -100,10 +100,11 @@ class ProductsController extends Controller
     public function getProductDetails(Request $request){
 
         // dd(\Auth::user());
-        
+       
         $id = $request->product_id;
 
-        $product = Products::findOrFail($id)->with('category:category_name,id')->with('product_pictures')->get();
+        $product = Products::where('id',$id)->with('category:category_name,id')->with('product_pictures')->first();
+        
 
         return response()->json($product);
     }
