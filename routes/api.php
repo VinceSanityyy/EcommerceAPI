@@ -63,6 +63,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('addProductComment{product_id?}', [ProductsController::class, 'addProductComment']);
             Route::post('addToCart', [CartController::class, 'addToCart']);
             Route::post('updateCart', [CartController::class, 'updateCart']);
+            Route::post('checkOut', [CartController::class, 'checkOut']);
             Route::delete('clearCart', [CartController::class, 'clearCart']);
         });
 });
