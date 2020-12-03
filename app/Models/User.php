@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens; 
+use App\Models\Cart;
 
 class User extends Authenticatable
 {
@@ -48,7 +49,8 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'image_link'
+        'image_link',
+        'cart_count',
     ];
 
     public function getImageLinkAttribute()
@@ -69,5 +71,16 @@ class User extends Authenticatable
         }
 
         return $photo;
+    }
+
+    public function getCartCountAttribute(){
+        $user = \Auth::user();
+        $cartCount = CartContent::where('user_id',$user->id)->count();
+        return $cartCount;
+    }
+
+    public function userCartContent()
+    {
+        return $this->hasMany('App\Models\CartContent', 'user_id');
     }
 }

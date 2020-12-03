@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User; 
+use App\Models\User; 
 use Illuminate\Support\Facades\Auth; 
 use Validator;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -31,6 +31,8 @@ class LoginController extends BaseController
 
     public function getUserInfo(Request $request){
         $user = Auth::user();
+        // dd($user->id);
+        $user = User::where('id',$user->id)->get();
         return $user;
     }
 

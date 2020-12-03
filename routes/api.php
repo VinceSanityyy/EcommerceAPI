@@ -65,6 +65,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('updateCart', [CartController::class, 'updateCart']);
             Route::post('checkOut', [CartController::class, 'checkOut']);
             Route::delete('clearCart', [CartController::class, 'clearCart']);
+            Route::get('getCartContent', [CartController::class, 'getCartContent']);
         });
 });
 Route::get('getCategories', [CategoriesController::class, 'getCategories']);

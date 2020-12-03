@@ -65,4 +65,11 @@ class CartController extends Controller
             'status' => 'success'
         ]);
     }
+
+    public function getCartContent(){
+        $user = \Auth::user();
+        $content = CartContent::where('user_id',$user->id)->with('product')->get();
+
+        return response()->json($content);
+    }
 }
