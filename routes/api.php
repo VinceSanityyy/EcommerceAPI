@@ -7,6 +7,7 @@ use App\Http\Controllers\API\CategoriesController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Controllers\API\UsersController;
 use App\Http\Controllers\API\CartController;
+use App\Http\Controllers\API\OrdersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -63,9 +64,9 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('addProductComment{product_id?}', [ProductsController::class, 'addProductComment']);
             Route::post('addToCart', [CartController::class, 'addToCart']);
             Route::post('updateCart', [CartController::class, 'updateCart']);
-            Route::post('checkOut', [CartController::class, 'checkOut']);
             Route::delete('clearCart', [CartController::class, 'clearCart']);
             Route::get('getCartContent', [CartController::class, 'getCartContent']);
+            Route::post('checkOut', [OrdersController::class, 'checkOut']);
         });
 });
 Route::get('getCategories', [CategoriesController::class, 'getCategories']);
