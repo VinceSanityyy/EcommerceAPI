@@ -32,8 +32,8 @@ class LoginController extends BaseController
     public function getUserInfo(Request $request){
         $user = Auth::user();
         // dd($user->id);
-        $user = User::where('id',$user->id)->get();
-        return $user;
+        $user = User::where('id',$user->id)->first();
+        return response()->json($user);
     }
 
     public function logout (Request $request) {
