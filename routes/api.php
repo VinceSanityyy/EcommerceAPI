@@ -66,10 +66,23 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('updateCart', [CartController::class, 'updateCart']);
             Route::delete('clearCart', [CartController::class, 'clearCart']);
             Route::get('getCartContent', [CartController::class, 'getCartContent']);
-            Route::post('testing', [OrdersController::class, 'checkOut']);
+            Route::post('checkOut', [OrdersController::class, 'checkOut']);
         });
 });
 Route::get('getCategories', [CategoriesController::class, 'getCategories']);
 Route::get('getProductDetailsCustomer{product_id?}', [ProductsController::class, 'getProductDetails']);
 Route::get('products', [ProductsController::class, 'getProducts']);
 
+// $url = 'http://investor.propnex.com/includes/integration_external_stock_quotes_json.json';
+// $output = $this->getCURL($url);
+// $stockjson = str_replace("ir_jsonIntegrate( ", "", $output);
+// $stockjson = substr($stockjson, 0, -2);
+// $stockjson = json_decode($stockjson, true);
+// $data['stockdata'] = $stockjson['result']['html'][0]['content'];
+// ​
+// $urlsgx = 'http://investor.propnex.com/includes/integration_external_news_summary_json.json';
+// $sgxnews = $this->getCURL($urlsgx);
+// $sgxnewsjson = str_replace("ir_jsonIntegrate( ", "", $sgxnews);
+// $sgxnewsjson = substr($sgxnewsjson, 0, -2);
+// $sgxnewsjson = json_decode($sgxnewsjson, true);
+// $data['sgxnews'] = $sgxnewsjson['result']['html'][0]['content'];
