@@ -11,19 +11,24 @@ use Carbon\Carbon;
 class OrdersController extends Controller
 {
     public function checkOut(Request $request){
-        
-        $order = new Orders;
+        $selectedProducts = json_decode($request->selectedProducts,true);
 
+        $order = new Orders;
         $order->user_id = \Auth::user()->id;
-        $order->price = $request->total;
+        $totalPrice = 0;
+        foreach ($selectedProducts as $key=>$val){
+            $totalPrice +=  $val['product']['price'];
+        }
+        // dd($totalPrice);
+        $order->price = $totalPrice;
         $order->date = Carbon::now()->toDateTimeString();
         $order->status = false;
         $order->save();
 
-        // echo($request->selectedProducts);
+       
         // $orderDetails->product_id = $request->product_id;
       
-        $selectedProducts = json_decode($request->selectedProducts,true);
+       
         // dd($selectedProducts);
         foreach($selectedProducts as $value){
             $orderDetails = new OrderDetails;
