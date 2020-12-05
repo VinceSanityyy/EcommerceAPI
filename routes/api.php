@@ -54,6 +54,8 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('getProductDetails{product_id?}', [ProductsController::class, 'getProductDetails']);
             Route::get('getCategoryDetails{category_id?}', [CategoriesController::class, 'getCategoryDetails']);
             Route::post('addPicturesToProducts{product_id?}', [ProductsController::class, 'addPicturesToProducts']);
+            Route::get('getOrderListAdmin', [OrdersController::class, 'getOrderListAdmin']);
+            Route::get('getOrderListDetailsAdmin', [OrdersController::class, 'getOrderListDetailsAdmin']);
         });
 
         Route::middleware(['customer'])->prefix('customer')->group(function(){
@@ -67,6 +69,9 @@ Route::middleware(['auth:api'])->group(function () {
             Route::delete('clearCart', [CartController::class, 'clearCart']);
             Route::get('getCartContent', [CartController::class, 'getCartContent']);
             Route::post('checkOut', [OrdersController::class, 'checkOut']);
+            Route::delete('removeCartContent', [CartController::class, 'removeCartContent']);
+            Route::get('getOrderListCustomer', [OrdersController::class, 'getOrderListCustomer']);
+            Route::get('getOrderListDetailsCustomer', [OrdersController::class, 'getOrderListDetailsCustomer']);
         });
 });
 Route::get('getCategories', [CategoriesController::class, 'getCategories']);

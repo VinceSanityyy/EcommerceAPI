@@ -72,4 +72,14 @@ class CartController extends Controller
 
         return response()->json($content);
     }
+
+    public function removeCartContent(Request $request){
+        
+        $id = $request->id;
+        $cartContent = CartContent::where('id',$id)->delete();
+        
+        return response()->json([
+            'status' => 'success'
+        ]);
+    }
 }

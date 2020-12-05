@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\OrderDetails;
 use App\Models\Orders;
+use App\Models\CartContent;
 use Carbon\Carbon;
 
 class OrdersController extends Controller
@@ -42,11 +43,36 @@ class OrdersController extends Controller
             $orderDetails->category = $value['product']['category_id'];
             $orderDetails->save();
         }
-        
+
+        // \sleep(5000);
+      
+        $user = \Auth::user();
+        $cartContent = CartContent::where('user_id',$user->id)->delete();
         return response()->json(array(
             "success" => true
         ));
-        
+    }
+
+
+    public function getOrderListAdmin(){
+        $orders = Orders::all();
+        return response()->json($orders);
+    }
+
+    public function getOrderListCustomer(){
+        $user = \Auth::user();
+        $orders = Orders::where('user_id',$user->id)->get();
+        return response()->json($orders);
+    }
+
+    public function getOrderListDetailsAdmin(Request $request){
+        $details = Orders::where('id',$request->order_id)->with('orderDetails')->with('user')->get();
+        return response()->json($details);
+    }
+
+    public function getOrderListDetailsCustomer(Request $request){
+        $details = Orders::where('id',$request->order_id)->with('orderDetails')->with('user')->get();
+        return response()->json($details);
     }
 
 }
