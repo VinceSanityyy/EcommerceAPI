@@ -15,37 +15,31 @@ class PaymentController extends Controller
         $this->gateway = Omnipay::create('PayPal_Rest');
         $this->gateway->setClientId('AQ4F9i02Qq2F3s3j8ZTts9E56Ydj5z1UQ3mdKOB-CkArL6agMre37FzPP4a3CbXB3SyqvDj_FGeoARr_');
         $this->gateway->setSecret('EDCLsKJFmeMc9lgTdWo2nmItMnv0BVXejnzvqQyQv_8RIIO75K45EwKzVok0ffV-VnKBPQHjHgXW3SKA');
-        $this->gateway->setTestMode(false); //set it to 'false' when go live
+        $this->gateway->setTestMode(true); //set it to 'false' when go live
     }
 
     public function charge(Request $request)
     {
-        if($request->input('submit'))
-        {
-            try {
-                $response = $this->gateway->purchase(array(
-                    'amount' => $request->amount,
-                    'currency' => 'PHP',
-                    'returnUrl' => $this->payment_success,
-                    'cancelUrl' => $this->payment_error,
-                ))->send();
-                
-                if ($response->isRedirect()) {
-                    $response->redirect(); 
-                } else {
-                    // not successful
-                    return $response->getMessage();
-                }
-            } catch(Exception $e) {
-                return $e->getMessage();
-            }
+
+        $response = $this->gateway->purchase(array(
+            'amount' => $request->amount,
+            'currency' => 'PHP',
+            'returnUrl' => url('paymentsuccess'),
+            'cancelUrl' => url('paymenterror'),
+        ))->send();
+        
+    
+        if ($response->isRedirect()) {
+            return response()->json($response->getRedirectUrl());
+        } else {
+            // not successful
+            return $response->getMessage();
         }
-        // dd($request->all());
     }
 
     public function payment_success(Request $request)
     {
-        // dd($request->all());
+        dd('success');
         // Once the transaction has been approved, we need to complete it.
         if ($request->input('paymentId') && $request->input('PayerID'))
         {
@@ -78,7 +72,8 @@ class PaymentController extends Controller
                 
                 return response()->json("Payment is successful. Your transaction id is: ". $arr_body['id']);
             } else {
-                return $response->getMessage();
+                // return $response->getMessage();
+                return 'asdasdas';
             }
         } else {
             return response()->json('Transaction is declined');

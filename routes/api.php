@@ -81,6 +81,10 @@ Route::get('getProductDetailsCustomer{product_id?}', [ProductsController::class,
 Route::get('products', [ProductsController::class, 'getProducts']);
 Route::post('donatePayment',[PaymentController::class, 'charge']);
 
+Route::get('paymentsuccess',[PaymentController::class, 'payment_success']);
+Route::get('paymenterror',[PaymentController::class, 'payment_error']);
+
+
 // $url = 'http://investor.propnex.com/includes/integration_external_stock_quotes_json.json';
 // $output = $this->getCURL($url);
 // $stockjson = str_replace("ir_jsonIntegrate( ", "", $output);

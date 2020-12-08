@@ -62,12 +62,12 @@ class OrdersController extends Controller
     }
 
     public function getOrderListDetailsAdmin(Request $request){
-        $details = Orders::where('id',$request->order_id)->with('orderDetails')->with('user')->get();
+        $details = Orders::where('id',$request->order_id)->with('orderDetails')->with('user')->first();
         return response()->json($details);
     }
 
     public function getOrderListDetailsCustomer(Request $request){
-        $details = Orders::where('id',$request->order_id)->with('orderDetails')->with('user')->get();
+        $details = Orders::where('id',$request->order_id)->with('orderDetails')->with('user')->first();
         return response()->json($details);
     }
 
