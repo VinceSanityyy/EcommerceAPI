@@ -26,14 +26,10 @@ class OrdersController extends Controller
         $order->status = false;
         $order->save();
 
-       
-        // $orderDetails->product_id = $request->product_id;
-      
-       
-        // dd($selectedProducts);
+
         foreach($selectedProducts as $value){
             $orderDetails = new OrderDetails;
-            // dd($value);
+            
             $orderDetails->order_id = $order->id;
             $orderDetails->product_id = $value['product_id'];
             $orderDetails->product_name = $value['product']['product_name'];
@@ -61,7 +57,7 @@ class OrdersController extends Controller
 
     public function getOrderListCustomer(){
         $user = \Auth::user();
-        $orders = Orders::where('user_id',$user->id)->get();
+        $orders = Orders::where('user_id',$user->id)->with('user')->get();
         return response()->json($orders);
     }
 

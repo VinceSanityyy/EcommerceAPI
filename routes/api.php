@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ProductsController;
 use App\Http\Controllers\API\UsersController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\OrdersController;
+use App\Http\Controllers\API\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -74,9 +75,11 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('getOrderListDetailsCustomer', [OrdersController::class, 'getOrderListDetailsCustomer']);
         });
 });
+
 Route::get('getCategories', [CategoriesController::class, 'getCategories']);
 Route::get('getProductDetailsCustomer{product_id?}', [ProductsController::class, 'getProductDetails']);
 Route::get('products', [ProductsController::class, 'getProducts']);
+Route::post('donatePayment',[PaymentController::class, 'charge']);
 
 // $url = 'http://investor.propnex.com/includes/integration_external_stock_quotes_json.json';
 // $output = $this->getCURL($url);
