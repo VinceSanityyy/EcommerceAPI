@@ -82,8 +82,9 @@ class ChatController extends Controller
     }
     
 
-    public function getAllMessages(){
-        $messages = Chat::where('reciever_id',\Auth::user()->id);
+    public function getAllMessagesAdmin(){
+        // dd('asdasd');
+        $messages = Chat::where('reciever_id',\Auth::user()->id)->with('user')->get();
         return response()->json($messages);
     }
 }

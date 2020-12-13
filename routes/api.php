@@ -61,6 +61,7 @@ Route::middleware(['auth:api'])->group(function () {
 
             Route::post('sendChatAdmin', [ChatController::class, 'sendChatAdmin']);
             Route::get('getMessageAdmin', [ChatController::class, 'getMessageAdmin']);
+            Route::get('getAllMessagesAdmin', [ChatController::class, 'getAllMessagesAdmin']);
         });
 
         Route::middleware(['customer'])->prefix('customer')->group(function(){

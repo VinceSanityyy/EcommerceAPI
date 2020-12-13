@@ -11,9 +11,9 @@ class Chat extends Model
     protected $table = 'chats';
     protected $guarded = [];
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo('App\Models\Users');
+        return $this->belongsTo('App\Models\User','sender_id');
     }
 
     public function chatDetails()
