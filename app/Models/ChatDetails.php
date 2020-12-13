@@ -13,4 +13,18 @@ class ChatDetails extends Model
     {
         return $this->belongsTo('App\Models\Chat');
     }
+
+    protected $appends = [
+        'myself',
+    ];
+
+    public function getMyselfAttribute()
+    {
+
+        if ($this->participantId == \Auth::user()->id) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

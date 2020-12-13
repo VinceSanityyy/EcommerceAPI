@@ -80,4 +80,10 @@ class ChatController extends Controller
         $chatDetails = ChatDetails::where('participantId',$request->reciever_id)->orWhere('reciever_id',$request->reciever_id)->get();
         return response()->json($chatDetails);
     }
+    
+
+    public function getAllMessages(){
+        $messages = Chat::where('reciever_id',\Auth::user()->id);
+        return response()->json($messages);
+    }
 }

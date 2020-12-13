@@ -13,7 +13,7 @@ class Chat extends Model
 
     public function users()
     {
-        return $this->belongsTo('App\Models\Users',);
+        return $this->belongsTo('App\Models\Users');
     }
 
     public function chatDetails()
