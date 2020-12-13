@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\API\DonationsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('paymentsuccess',[DonationsController::class, 'payment_success']);
+Route::get('paymenterror',[DonationsController::class, 'payment_error']);

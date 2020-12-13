@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
-
-class PaymentController extends Controller
+use App\Models\Donations;
+class DonationsController extends Controller
 {
     public $gateway;
  
@@ -39,7 +39,7 @@ class PaymentController extends Controller
 
     public function payment_success(Request $request)
     {
-        dd('success');
+        // dd($request->all());
         // Once the transaction has been approved, we need to complete it.
         if ($request->input('paymentId') && $request->input('PayerID'))
         {
@@ -55,12 +55,13 @@ class PaymentController extends Controller
                 $arr_body = $response->getData();
                 // dd($arr_body);
                 // Insert transaction data into the database
-                $isPaymentExist = Payment::where('payment_id', $arr_body['id'])->first();
+                $isPaymentExist = Donations::where('payment_id', $arr_body['id'])->first();
                 
                 if(!$isPaymentExist)
                 {
-                    $payment = new Payment;
+                    $payment = new Donations;
                     $payment->payment_id = $arr_body['id'];
+                    $payment->user_id = $user_id = empty($request->user_id) ? null : $request->user_id;
                     $payment->payer_id = $arr_body['payer']['payer_info']['payer_id'];
                     $payment->payer_email = $arr_body['payer']['payer_info']['email'];
                     $payment->amount = $arr_body['transactions'][0]['amount']['total'];
@@ -70,7 +71,8 @@ class PaymentController extends Controller
                     $payment->save();
                 }
                 
-                return response()->json("Payment is successful. Your transaction id is: ". $arr_body['id']);
+                // return response()->json("Donation is Successfull. Your transaction id is: ". $arr_body['id']);
+                return \Redirect::to('http://localhost:3000/donation/thankyou');
             } else {
                 // return $response->getMessage();
                 return 'asdasdas';

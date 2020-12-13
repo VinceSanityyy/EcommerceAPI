@@ -8,7 +8,8 @@ use App\Http\Controllers\API\ProductsController;
 use App\Http\Controllers\API\UsersController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\OrdersController;
-use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\DonationsController;
+use App\Http\Controllers\API\ChatController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,6 +58,9 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('addPicturesToProducts{product_id?}', [ProductsController::class, 'addPicturesToProducts']);
             Route::get('getOrderListAdmin', [OrdersController::class, 'getOrderListAdmin']);
             Route::get('getOrderListDetailsAdmin', [OrdersController::class, 'getOrderListDetailsAdmin']);
+
+            Route::post('sendChatAdmin', [ChatController::class, 'sendChatAdmin']);
+            Route::get('getMessageAdmin', [ChatController::class, 'getMessageAdmin']);
         });
 
         Route::middleware(['customer'])->prefix('customer')->group(function(){
@@ -73,16 +77,19 @@ Route::middleware(['auth:api'])->group(function () {
             Route::delete('removeCartContent', [CartController::class, 'removeCartContent']);
             Route::get('getOrderListCustomer', [OrdersController::class, 'getOrderListCustomer']);
             Route::get('getOrderListDetailsCustomer', [OrdersController::class, 'getOrderListDetailsCustomer']);
+
+
+            Route::post('sendChatCustomer', [ChatController::class, 'sendChatCustomer']);
+            Route::get('getMessageCustomer', [ChatController::class, 'getMessageCustomer']);
         });
 });
 
 Route::get('getCategories', [CategoriesController::class, 'getCategories']);
 Route::get('getProductDetailsCustomer{product_id?}', [ProductsController::class, 'getProductDetails']);
 Route::get('products', [ProductsController::class, 'getProducts']);
-Route::post('donatePayment',[PaymentController::class, 'charge']);
+Route::post('donatePayment',[DonationsController::class, 'charge']);
 
-Route::get('paymentsuccess',[PaymentController::class, 'payment_success']);
-Route::get('paymenterror',[PaymentController::class, 'payment_error']);
+
 
 
 // $url = 'http://investor.propnex.com/includes/integration_external_stock_quotes_json.json';

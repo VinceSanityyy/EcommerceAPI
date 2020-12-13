@@ -89,5 +89,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Comment\Orders');
     }
 
+    public function chats()
+    {
+        return $this->hasMany('App\Models\Chat');
+    }
+
 
 }

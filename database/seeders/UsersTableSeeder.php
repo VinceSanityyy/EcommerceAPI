@@ -15,14 +15,32 @@ class UsersTableSeeder extends Seeder
     {
         $users = [ 
             [
-              'name' => 'Test User',
+              'name' => 'Admin',
               'email' => 'test@ecommerce.com',
               'password' => \Hash::make('123123123'),
               'address' => 'Davao City',
               'contact' => '0912345678',
               'role_id' => 1,
               'isVerified' => 1
-          ]
+            ],
+            [
+                'name' => 'Customer ',
+                'email' => 'customer@ecommerce.com',
+                'password' => \Hash::make('123123123'),
+                'address' => 'Davao City',
+                'contact' => '09123452678',
+                'role_id' => 2,
+                'isVerified' => 1
+            ],
+            [
+                'name' => 'Customer Second',
+                'email' => 'customer2@ecommerce.com',
+                'password' => \Hash::make('123123123'),
+                'address' => 'Davao City',
+                'contact' => '091213452678',
+                'role_id' => 2,
+                'isVerified' => 1
+            ]
         ];
         
         \DB::table('users')->insert($users);

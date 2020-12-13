@@ -9,10 +9,8 @@ use BenSampo\Enum\Enum;
  * @method static static OptionTwo()
  * @method static static OptionThree()
  */
-final class UserType extends Enum
+final class ChatStatus extends Enum
 {
-    const superAdmin =   1;
-    const Admin =   2;
-    const Customer = 3;
-    
+    const SEEN =   0;
+    const DELIVERED =   1;
 }
