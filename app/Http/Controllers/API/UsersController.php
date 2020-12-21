@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
+use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
     public function register(Request $request){
@@ -57,5 +59,22 @@ class UsersController extends Controller
                 "message" => $th->getMessage()
             ], 400);
         }
+    }
+
+    public function ChangePassword(ChangePasswordRequest $request){
+        $user = Auth::user();
+        if(\Hash::check($request->current_password, $user->password)){
+            $user->password = \Hash::make($request->new_password);
+            $user->save();
+
+            return response()->json([
+                'status' => 'success'
+            ]);
+        }
+        return response()->json([
+            'status' => 'fail',
+            'message' => 'Invalid current password'
+        ], 402);
+
     }
 }
