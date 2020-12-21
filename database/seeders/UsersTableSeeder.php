@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,6 +15,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        // Schema::disable
+        Schema::disableForeignKeyConstraints();
+        User::truncate();
         $users = [
             [
               'name' => 'Admin',
@@ -53,5 +58,6 @@ class UsersTableSeeder extends Seeder
         ];
 
         \DB::table('users')->insert($users);
+        Schema::enableForeignKeyConstraints();
     }
 }
