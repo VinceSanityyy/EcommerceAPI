@@ -79,9 +79,15 @@ Route::middleware(['auth:api'])->group(function () {
             Route::get('getOrderListCustomer', [OrdersController::class, 'getOrderListCustomer']);
             Route::get('getOrderListDetailsCustomer', [OrdersController::class, 'getOrderListDetailsCustomer']);
 
-
+            // Chat
             Route::post('sendChatCustomer', [ChatController::class, 'sendChatCustomer']);
             Route::get('getMessageCustomer', [ChatController::class, 'getMessageCustomer']);
+
+
+            //Profile Settings
+            Route::post('changePassword', [UsersController::class, 'ChangePassword']);
+            // Route::post('changePassword', [UsersController::class, 'updateProfile']);
+
         });
 });
 
