@@ -86,6 +86,7 @@ Route::middleware(['auth:api'])->group(function () {
 
             //Profile Settings
             Route::post('changePassword', [UsersController::class, 'ChangePassword']);
+            Route::post('updateProfile', [UsersController::class, 'updateProfile']);
             // Route::post('changePassword', [UsersController::class, 'updateProfile']);
 
         });

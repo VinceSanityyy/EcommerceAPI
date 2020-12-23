@@ -77,4 +77,21 @@ class UsersController extends Controller
         ], 402);
 
     }
+
+    public function updateProfile(Request $request){
+        $AuthUser = Auth::user();
+        $user = User::find($AuthUser->id);
+        $user->name = $request->name;
+        $user->contact = $request->contact;
+        $user->address = $request->address;
+        if ($request->hasFile('image')) {
+            $name = $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->store('public/images');
+            $user->image = $path;
+        }
+        $user->save();
+        return response()->json([
+            "success" => true,
+        ]);
+    }
 }
