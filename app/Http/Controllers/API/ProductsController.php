@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductCreateRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Categories;
@@ -12,8 +14,8 @@ use DB;
 
 class ProductsController extends Controller
 {
-    public function addProduct(Request $request){
-
+    public function addProduct(ProductCreateRequest $request){
+        // dd($request);
         DB::beginTransaction();
             try {
 
@@ -42,7 +44,7 @@ class ProductsController extends Controller
                     "message" => $th->getMessage()
                 ], 400);
             }
-        
+
     }
 
     public function getProducts(){
@@ -55,7 +57,7 @@ class ProductsController extends Controller
     }
 
     public function getProdutcsByCat(Request $request){
-   
+
         $products = Categories::where('id',$request->category_id)->with('products')->get();
         // return response()->json([
         //     'success' => true,
@@ -64,8 +66,8 @@ class ProductsController extends Controller
         return response()->json($products);
     }
 
-    public function updateProduct(Request $request){
-     
+    public function updateProduct(ProductUpdateRequest $request){
+
         DB::beginTransaction();
 
         try {
@@ -100,11 +102,11 @@ class ProductsController extends Controller
     public function getProductDetails(Request $request){
 
         // dd(\Auth::user());
-       
+
         $id = $request->product_id;
 
         $product = Products::where('id',$id)->with('category:category_name,id')->with('product_pictures')->first();
-        
+
 
         return response()->json($product);
     }
@@ -113,7 +115,7 @@ class ProductsController extends Controller
         DB::beginTransaction();
 
         try {
-  
+
             $files = $request->file('image');
             $allowedfileExtension=['pdf','jpg','png'];
 
@@ -125,8 +127,8 @@ class ProductsController extends Controller
                     foreach($request->image as $mediaFiles){
                         $path = $mediaFiles->store('public/images');
                         $name = $mediaFiles->getClientOriginalName();
-              
-                      
+
+
                         $pictures = new ProductPictures();
                         $pictures->product_id = $request->product_id;
                         $pictures->picture = $path;

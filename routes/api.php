@@ -53,7 +53,7 @@ Route::middleware(['auth:api'])->group(function () {
             Route::post('updateCategory{category_id?}', [CategoriesController::class, 'updateCategory']);
             Route::get('getProductsByCategory{category_id?}', [ProductsController::class, 'getProdutcsByCat']);
             Route::post('updateUser{user_id?}', [UsersController::class, 'updateUser']);
-            Route::get('getProductDetails{product_id?}', [ProductsController::class, 'getProductDetails']);
+            Route::get('getProductDetails/{product_id?}', [ProductsController::class, 'getProductDetails']);
             Route::get('getCategoryDetails{category_id?}', [CategoriesController::class, 'getCategoryDetails']);
             Route::post('addPicturesToProducts{product_id?}', [ProductsController::class, 'addPicturesToProducts']);
             Route::get('getOrderListAdmin', [OrdersController::class, 'getOrderListAdmin']);
